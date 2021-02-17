@@ -1,7 +1,7 @@
 # TW_bank
 台灣版 銀行輸入框 選擇總行 自帶分行
 
-userage
+usage
 
 在 html 中 需引入
 1、bank.css
