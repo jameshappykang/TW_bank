@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="bank.css">
+    <script src="jQuery.3.5.1.js"></script>
+    <script src="banks.js"></script>
+    <script src="branches.js"></script>
+</head>
+
+<body>
+    <div class="card-body">
+        <form method="POST" action="">
+
+            <div class="form-item">
+                <label for="bank_name" id="" class="">銀行名稱</label>
+                <select name="bank" id="bank">
+                    <option value="bank" selected>請選擇總行</option>
+                </select>
+            </div>
+
+            <div class="form-item">
+                <label for="branch_name" id="" class="">分行名稱</label>
+                <select name="branch" id="branch">
+                    <option value="branch" selected>請選擇分行</option>
+                </select>
+            </div>
+
+            <div class="form-item">
+                <label for="account_number" id="" class="">帳戶號碼</label>
+                <div class="col-md-6">
+                    <input id="account_number" type="text" class="form-item" name="account_number"
+                        value="" autofocus required>
+                </div>
+                <div id="account_numberInfo"></div>
+            </div>
+
+            <div class="form-item">
+                <label for="account_name" id="" class="">帳戶名稱</label>
+                <div class="col-md-6">
+                    <input id="account_name" type="text" class="form-item" name="account_name"
+                        value="" autofocus required>
+                </div>
+                <div id="account_nameInfo"></div>
+            </div>
+
+            <div class="form-item">
+                <div class="col-md-6 offset-md-4">
+                    <button type="submit" id="submit" class="btn">
+                        確定送出
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+
+    <script type="text/javascript">
+
+        banksJson.forEach(function (banksJson, index) {
+            $("#bank").append(`<option value="${banksJson.head_code}">${banksJson.bank_name}</option>`);
+        })
+
+        $("#bank").on("change", function () {
+            var code = this.value;
+            var newBranchesJson = [];
+
+            for (var i = 0; i < branchesJson.length; i++) {
+                if (branchesJson[i].head_code == code) {
+                    newBranchesJson.push(branchesJson[i]);
+                }
+            }
+            newBranchesJson.forEach(function (newBranchesJson, index) {
+                $("#branch").append(`<option value="${newBranchesJson.branch_code}">${newBranchesJson.branch_name}</option>`);
+            })
+        })
+        // 帳戶號碼 輸入驗證  規則 = /^[0-9\s]*$/  僅限輸入 阿拉伯數字
+            $("#account_number").on('focus', function() {
+                $("#account_numberInfo").removeClass("alert-warning alert-ok").hide();
+            })
+            $("#account_number").on('blur', function() {
+                var account_number = this.value;
+                var reg = /^[0-9\s]*$/;
+                if(account_number !== '') {
+                    if(!reg.test(account_number)) {
+                        $("#account_numberInfo").addClass("alert-warning").show().html("格式是 僅限輸入 阿拉伯數字&nbsp;才能通過");
+                        return;
+                    }
+                }
+            })
+        
+        // 帳戶名稱驗證  規則 = /^[\u4E00-\u9FA5A-Za-z0-9_]+$/ (只允許 中、英文、数字、下划线 且不能有空白)
+            $("#account_name").on("focus", function() {
+                $("#account_nameInfo").removeClass("alert-warning").hide();
+            })
+            $("#account_name").on('input', function() {
+                $("#account_nameInfo").removeClass("alert-warning").hide();
+                var account_name = this.value;
+                var reg = /^[\u4E00-\u9FA5A-Za-z0-9_]+$/;
+                if(account_name !== '') {                    
+                    if(!reg.test(account_name)) {
+                        $("#account_nameInfo").addClass("alert-warning").show().html("僅：中、英文、数字、下划线 且不能有空白");
+                        return;
+                    }
+                }
+            })
+    </script>
+</body>
+
+</html>
