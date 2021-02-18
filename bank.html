@@ -76,6 +76,7 @@
                     newBranchesJson.push(branchesJson[i]);
                 }
             }
+            $("#branch").html('');
             newBranchesJson.forEach(function (newBranchesJson, index) {
                 $("#branch").append(`<option value="${newBranchesJson.branch_code}">${newBranchesJson.branch_name}</option>`);
             })
