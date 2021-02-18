@@ -14,3 +14,7 @@ usage
 帳戶號碼的 驗證 僅限制輸入為 僅限阿拉伯數字(不限位數)
 
 目前無法做到 完全符合 銀行規定的格式(歡迎有經驗、能力者 共同維護改善)
+
+idcocode@gmail.com 
+Best Regards
+James Kang 
